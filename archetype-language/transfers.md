@@ -14,14 +14,14 @@ where `coder` is a `role` variable.
 
 ## Calling a contract
 
-It is possible to call a smart contract with the `transfer` instruction. Say for example you want to call the `set_value` entry point of the following contract: 
+It is possible to call a smart contract with the `transfer` instruction. Say for example you want to call the `add_value` entry point of the following contract: 
 
 ```javascript
 archetype contract_called
 
 variable v : nat = 0
 
-entry set_value(x : nat) { v := x }
+entry add_value(x : nat) { v += x }
 ```
 
 The contract may then be called with the `transfer ... to ... call ...` instruction:
