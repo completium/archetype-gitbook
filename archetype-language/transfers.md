@@ -156,7 +156,7 @@ entry getValue() {
 
 ```
 
-Note that `callview` returns an _option_ of value that requires to be handled. It returns none when :
+Note that `callview` returns an _option_ of value that requires to be handled. It returns `none` when :
 
 * the contract at the specified address does not contain the view with the specified name
 * the view fails
