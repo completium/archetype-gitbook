@@ -14,7 +14,7 @@ where `coder` is a `role` variable.
 
 ## Calling a contract
 
-It is possible to call a smart contract with the `transfer` instruction. Say for example you want to call the `add_value` entry point of the following contract: 
+It is possible to call a smart contract with the `transfer` instruction. Say for example you want to call the `add_value` entry point of the following contract:
 
 ```javascript
 archetype contract_called
@@ -57,7 +57,7 @@ This pattern is presented in the _two-way-inter-contract_ _invocation_ article b
 
 {% embed url="https://medium.com/protofire-blog/enabling-smart-contract-interaction-in-tezos-with-ligo-functions-and-cps-e3ea2aa49336" %}
 
-The archetype version of the _sender_ contract \(see article above\):
+The archetype version of the _sender_ contract (see article above):
 
 ```javascript
 archetype sender
@@ -69,17 +69,17 @@ getter getBar () { return bar }
 entry setBar (b : nat) { bar := b }
 ```
 
-It uses the `getter` keyword used to declare an entry point to the contract called "getBar"; the Michelson version of this entry actually takes a callback function \(a setter\) used to set/use the `bar` value in another contract. It is syntactic sugar equivalent to the following entry declaration:
+It uses the `getter` keyword used to declare an entry point to the contract called "getBar"; the Michelson version of this entry actually takes a callback function (a setter) used to set/use the `bar` value in another contract. It is syntactic sugar equivalent to the following entry declaration:
 
 ```javascript
 entry getBar (cb : contract<nat>) { transfer 0tz to entry cb(bar) }
 ```
 
-The `contract` type is used to declare the callback type; it is parametrized by the signature of the callback, represented as the tuple of argument types.  
+The `contract` type is used to declare the callback type; it is parametrized by the signature of the callback, represented as the tuple of argument types.
 
 The difference between the `getter` and `entry` versions of the `getBar` entry above is that the callback argument is _anonymous_ in the `getter` version.
 
-The archetype version of the _inspector_ contract \(see article above\):
+The archetype version of the _inspector_ contract (see article above):
 
 ```javascript
 archetype inspector
@@ -112,5 +112,50 @@ entry getFoo(asender : address) {
 }
 ```
 
+### View
 
+Since Hangzhou protocol, it is possible for a contract to read the storage of another contract by declaring a view in the contract to read data from, and by calling this view.
 
+Use the `view` to declares such a view; as for entry points, views take may have arguments. Use the `return` keyword to return any value to the calling contract.
+
+In the example below, the view returns the amount stored in storage, multiplied by two:
+
+```javascript
+archetype with_view
+
+variable v : nat = 0
+
+entry setValue(a : nat) {  v := a }
+
+view getValueMby2 () : nat {
+  return (2 * v) 
+}
+```
+
+Use the `callview` operator to call a contract view; parameters are:
+
+* the expected return type between chevrons `< ... >`
+* the address of the contract to call
+* the parameter of the view (potentially a tuple)
+
+The example below illustrates how to call the view `getValueMby2` defined above:
+
+```
+archetype call_view(
+  with_view : address
+)
+
+variable v : nat = 0
+
+entry getValue() {
+  match callview<nat>(with_view, "getValueMby2", Unit) with
+  | some(res) -> v := res
+  | none -> fail("FAILED_TO_CALL_VIEW")
+}
+
+```
+
+Note that `callview` returns an _option_ of value that requires to be handled. It returns none when :
+
+* the contract at the specified address does not contain the view with the specified name
+* the view fails
