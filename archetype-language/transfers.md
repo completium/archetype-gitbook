@@ -116,9 +116,9 @@ entry getFoo(asender : address) {
 
 Since Hangzhou protocol, it is possible for a contract to read the storage of another contract by declaring a view in the contract to read data from, and by calling this view.
 
-Use the `view` to declares such a view; as for entry points, views take may have arguments. Use the `return` keyword to return any value to the calling contract.
+Use the `view` keyword to declare such a view; as for entry points, views may have arguments. Use the `return` keyword to return any value to the calling contract.
 
-In the example below, the view returns the amount stored in storage, multiplied by two:
+In the example below, the view returns the natural value stored in the storage, multiplied by 2:
 
 ```javascript
 archetype with_view
