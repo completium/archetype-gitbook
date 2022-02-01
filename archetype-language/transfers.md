@@ -140,7 +140,7 @@ Use the `callview` operator to call a contract view; parameters are:
 
 The example below illustrates how to call the view `getValueMby2` defined above:
 
-```
+```javascript
 archetype call_view(
   with_view : address
 )
