@@ -151,6 +151,7 @@ entry getValue() {
   match callview<nat>(with_view, "getValueMby2", Unit) with
   | some(res) -> v := res
   | none -> fail("FAILED_TO_CALL_VIEW")
+  end
 }
 
 ```
