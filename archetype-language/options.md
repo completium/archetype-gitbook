@@ -102,3 +102,18 @@ r.latitude := 74.04;
 ### Enums
 
 An enum is a union type, that is a value taken from a list of possible values. For example the the following enum defines 3 possible colors:
+
+```ocaml
+enum color = 
+| Red
+| Green
+| Blue
+```
+
+You can then create a value by using one of the three possible values:
+
+```ocaml
+var c = Red;
+```
+
+You can test the value with \`\`
