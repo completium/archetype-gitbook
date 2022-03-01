@@ -77,7 +77,7 @@ asset animal identified by aid {
 
 asset field identified by fid {
   fid : string;
-  animals : animal partition
+  animals : partition<animal>
 }
 ```
 
