@@ -104,7 +104,7 @@ r.latitude := 74.04;
 An enum is a union type, that is a value taken from a list of possible values. For example the the following enum defines 3 possible colors:
 
 ```ocaml
-enum color = 
+enum Color = 
 | Red
 | Green
 | Blue
@@ -116,4 +116,33 @@ You can then create a value by using one of the three possible values:
 var c = Red;
 ```
 
-You can test the value with \`\`
+You can test the value with `=` and `<>` comparison operators. You can also check for any of the possible values with `match ... with end` instruction:
+
+```ocaml
+match c with
+| Red -> ...
+| Green -> ...
+| Blue -> ...
+end;
+```
+
+Note that this instruction fails to compile if one case is omitted.
+
+An enum type may be parameterised by other types. For example :&#x20;
+
+```ocaml
+enum Color = 
+| RGB <nat * nat * nat>
+| YUV <nat * nat * nat>
+| CMY <nat * nat * nat>
+```
+
+You can then deconstruct a `color` value the following way:
+
+```ocaml
+match c with
+| RGB (red, green, blue) -> ...
+| YUV (lum, chrom1, chrom2) -> ...
+| CMY (cyan, magenta, yellow) ->
+end
+```
