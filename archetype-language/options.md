@@ -4,7 +4,7 @@
 
 An option is convenient when a variable may or may not have a value of a given type.
 
-#### Declare 
+#### Declare&#x20;
 
 `some` and`none` are the 2 operators to build an option value.
 
@@ -14,7 +14,7 @@ variable receiver : option<address> = none // to be set later ...
 variable message : option<string> = some("there is a message")
 ```
 
-#### Test 
+#### Test&#x20;
 
 `issome` and `isnone` are the 2 operators to test whether an option value is none or is some.
 
@@ -32,7 +32,7 @@ entry testopt (a : option<int>) {
 }
 ```
 
-#### Get 
+#### Get&#x20;
 
 `opt_get` is the operator to extract the value from a `some` option value. It _fails_ if the value is `none`.
 
@@ -66,7 +66,7 @@ effect {
 }
 ```
 
-Projection _fails_ if the dimension index is invalid. 
+Projection _fails_ if the dimension index is invalid.&#x20;
 
 The dimension index _must_ be a straightforward literal of integer. It does not support any expression, even an expression that would reduce to an integer value. For example, the following does not compile:
 
@@ -99,3 +99,6 @@ r.longitude := 40.6892494;
 r.latitude := 74.04;
 ```
 
+### Enums
+
+An enum is a union type, that is a value taken from a list of possible values. For example the the following enum defines 3 possible colors:
