@@ -2,7 +2,7 @@
 description: Variable and asset collection
 ---
 
-# Data storage
+# Assets
 
 ## Constant
 
@@ -20,7 +20,7 @@ constant msg : string = "Hello world"
 
 ## Variable
 
-A variable is a global value that can be changed. The following snippet defines 2 global variables named `seller` and `buyer` typed role equal to a \(here random\) addresses:
+A variable is a global value that can be changed. The following snippet defines 2 global variables named `seller` and `buyer` typed role equal to a (here random) addresses:
 
 ```ocaml
 variable seller : role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk
@@ -43,7 +43,7 @@ asset car identified by vin {
 
 By default, assets are sorted on the identifier value. It is possible to specify another default sort. For example to sort car assets on the `year` field value:
 
-```text
+```
 asset car identified by vin sorted by year {
   vin : string;
   model : string;
@@ -51,7 +51,7 @@ asset car identified by vin sorted by year {
 }
 ```
 
-The type of a field may be a basic type, or one of `collection` or `partition`. 
+The type of a field may be a basic type, or one of `collection` or `partition`.
 
 A collection is the generic name for an asset container. For example, if `part` is the asset for vehicle part, it is possible to describe which parts a car is made of:
 
@@ -64,11 +64,11 @@ asset car identified by vin {
   vin : string;
   model : string;
   year : int;
-  parts : part collection;
+  parts : aggregate<part>;
 }
 ```
 
-Say now that the contract deals with animals and country fields. An animal is in one, and only one field \(obviously\). A fields has a collection of animals. But rather than `collection`, the `partition` keyword specifies that _every_ animal is in _one_ field:
+Say now that the contract deals with animals and country fields. An animal is in one, and only one field (obviously). A fields has a collection of animals. But rather than `collection`, the `partition` keyword specifies that _every_ animal is in _one_ field:
 
 ```ocaml
 asset animal identified by aid {
@@ -81,7 +81,7 @@ asset field identified by fid {
 }
 ```
 
-Declaring an asset implicitly creates the collection which contains asset instances. It means that data storage in Archetype is abstract, like SQL, compared to programming languages which provides set, map, list, ... containers. 
+Declaring an asset implicitly creates the collection which contains asset instances. It means that data storage in Archetype is abstract, like SQL, compared to programming languages which provides set, map, list, ... containers.
 
 In order to get a technical vision of asset collections, you may consider that the asset collection is equivalent to a map between the identifier field and a record made of the other fields.
 
@@ -97,6 +97,3 @@ module CarCollection = Map.make(String)
 ```
 
 Storage of asset is abstract in Archetype in order for the transcoder to apply optimisation strategy when generating execution code. For example, if the car collection is only accessed via get and set methods, then it will be generated as a _set_ container.
-
-
-
