@@ -160,3 +160,39 @@ Note that `callview` returns an _option_ of value that requires to be handled. I
 
 * the contract at the specified address does not contain the view with the specified name
 * the view fails
+
+
+
+## Events
+
+Archetype provides a seamless way to work with contract events. Please refer to these [`articles`](https://opentezos/archetype/events/emit-receive) for a presentation.
+
+Archetype defines events with the `event` keyword declaration. An event may possess several fields, like a record.
+
+For example the following declares the `HighestBidIncreased` event with two fields `bidder` and `amount`:
+
+```ocaml
+event HighestBidIncreased {  bidder : address;  amount : tez }
+```
+
+Event fields may be of any type except:
+
+* `event`
+* `operation`
+* `big_map`
+* `asset`
+* `contract`
+* `ticket`
+* `sapling_state`
+
+Use `emit` instruction to emit an event:
+
+```javascript
+entry bid() {  
+  (* ... *)  
+  if transferred > highestbid then begin
+      highestbid := transferred;
+      emit<HighestBidIncreased>({ source; transferred })
+  end
+ }
+```
